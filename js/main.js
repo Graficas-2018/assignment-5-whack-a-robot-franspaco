@@ -13,6 +13,8 @@ var imgloader = new THREE.TextureLoader();
 
 var score = 0;
 var score_field = null;
+var highscore = 0;
+var highscore_field = null;
 
 
 var playing = false;
@@ -72,6 +74,7 @@ function reset_start(){
         mole.nextEvent = getStartUpTime();
         mole.nextDown = null;
     });
+    updateScore();
     run();
 }
 
@@ -94,6 +97,7 @@ function stop_game(){
  */
 async function startUp(){
     score_field = $("#score-field");
+    highscore_field = $("#highscore-field");
     timer_field = $("#time-indicator");
     menu = $("#menu");
     $("#reset-button").click(() =>{
@@ -124,7 +128,7 @@ async function startUp(){
 }
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * UI functions
+ * Scoring & UI functions
  */
 
 /**
@@ -140,6 +144,17 @@ function hit(){
  */
 function updateScore(){
     score_field.text("Score: " + score);
+    if(score > highscore){
+        highscore = score;
+        updateHighscore();
+    }
+}
+
+/**
+ * Updates score UI
+ */
+function updateHighscore(){
+    highscore_field.text("Highscore: " + highscore);
 }
 
 /**
